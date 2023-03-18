@@ -1,1 +1,1 @@
-# djangoboards
+# chatboards
