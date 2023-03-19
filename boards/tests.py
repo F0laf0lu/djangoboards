@@ -101,7 +101,7 @@ class NewTopicTest(TestCase):
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
     
-    def test_new_topic_view_not_foun(self):
+    def test_new_topic_view_not_found(self):
         url = reverse('new_topic', kwargs={'pk': 99})
         response = self.client.get(url)
         self.assertEquals(response.status_code, 404)
@@ -116,13 +116,13 @@ class NewTopicTest(TestCase):
         response = self.client.get(new_topic_url)
         self.assertContains(response, 'href="{0}"'.format(board_topics_url))
     
-    def test_contains_form(self):  # <- new test
+    def test_contains_form(self):
         url = reverse('new_topic', kwargs={'pk': 1})
         response = self.client.get(url)
         form = response.context.get('form')
         self.assertIsInstance(form, NewTopicForm)
 
-    def test_new_topic_invalid_post_data(self):  # <- updated this one  
+    def test_new_topic_invalid_post_data(self): 
         '''
         Invalid post data should not redirect
         The expected behavior is to show the form again with validation errors
