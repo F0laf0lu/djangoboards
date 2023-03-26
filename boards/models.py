@@ -1,3 +1,4 @@
+import math
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import Truncator
@@ -20,9 +21,15 @@ class Topic(models.Model):
     last_updated = models.DateTimeField(auto_now_add=True)
     board = models.ForeignKey(Board, related_name='topics', on_delete=models.CASCADE)
     starter = models.ForeignKey(User, related_name='topics', on_delete=models.CASCADE)
+    views = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.subject
+    
+    def get_page_count(self):
+        count = self.posts.count()
+        pages = count / 20
+        return math.ceil(pages)
 
 class Post(models.Model):
     message = models.TextField(max_length=4000)
